@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center">
+        <h1>Welcome to Your Personal Finance Tracker</h1>
+        <p class="lead">Easily manage your income and expenses. Get insights to take control of your finances.</p>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        <a href="{% url 'transaction_list' %}" class="btn btn-primary btn-lg me-3">View Transactions</a>
+        <a href="{% url 'add_transaction' %}" class="btn btn-success btn-lg">Add New Transaction</a>
+    </div>
+</div>
+{% endblock %}
+
+{% comment %} <h1>Welcome, {{ user.username }}</h1>
+<a href="{% url 'logout' %}">Logout</a>
+<a href="{% url 'add_transaction' %}">Add Transcation</a> {% endcomment %}

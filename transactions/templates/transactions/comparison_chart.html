@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+
+{% block title %}Income vs Expense Comparison{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Income vs Expense Comparison</h1>
+
+        <!-- Description or extra content -->
+        <p>This chart compares your income and expenses across different categories.</p>
+
+        <!-- The Pie Chart -->
+        <canvas id="comparisonChart" width="400" height="100"></canvas>  <!-- Decreased height -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Fetch data from the JSON endpoint
+        fetch("{% url 'comparison_data' %}")
+            .then(response => response.json())
+            .then(data => {
+                // Parse data into labels, expenses, and income
+                const labels = data.map(item => item.category);
+                const expenses = data.map(item => item.expenses);
+                const income = data.map(item => item.income);
+
+                // Render Chart.js Bar Chart
+                const ctx = document.getElementById('comparisonChart').getContext('2d');
+                const comparisonChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels, // Categories
+                        datasets: [
+                            {
+                                label: 'Expenses',
+                                data: expenses, // Expense totals
+                                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                            },
+                            {
+                                label: 'Income',
+                                data: income, // Income totals
+                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Categories',
+                                },
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Amount',
+                                },
+                                beginAtZero: true,
+                            },
+                        },
+                    },
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+{% endblock %}
+
+
+{% comment %} {% extends 'base.html' %}
+
+{% block title %}Income vs Expense Comparison{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Income vs Expense Comparison</h1>
+
+        <!-- Description or extra content -->
+        <p>This chart compares your income and expenses across different categories.</p>
+
+        <!-- Button to trigger or download data, if needed -->
+        <a href="{% url 'transaction_summary' %}" class="btn btn-primary mb-3">Back to Summary</a>
+
+        <!-- The Pie Chart -->
+        <canvas id="comparisonChart" width="400" height="400"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Fetch data from the JSON endpoint
+        fetch("{% url 'comparison_data' %}")
+            .then(response => response.json())
+            .then(data => {
+                // Parse data into labels, expenses, and income
+                const labels = data.map(item => item.category);
+                const expenses = data.map(item => item.expenses);
+                const income = data.map(item => item.income);
+
+                // Render Chart.js Bar Chart
+                const ctx = document.getElementById('comparisonChart').getContext('2d');
+                const comparisonChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels, // Categories
+                        datasets: [
+                            {
+                                label: 'Expenses',
+                                data: expenses, // Expense totals
+                                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                            },
+                            {
+                                label: 'Income',
+                                data: income, // Income totals
+                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Categories',
+                                },
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Amount',
+                                },
+                                beginAtZero: true,
+                            },
+                        },
+                    },
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+{% endblock %} {% endcomment %}
+
+
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>Income vs Expense Comparison</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Income vs Expense Comparison</h1>
+    <canvas id="comparisonChart" width="400" height="400"></canvas>
+
+    <script>
+        // Fetch data from the JSON endpoint
+        fetch("{% url 'comparison_data' %}")
+            .then(response => response.json())
+            .then(data => {
+                // Parse data into labels, expenses, and income
+                const labels = data.map(item => item.category);
+                const expenses = data.map(item => item.expenses);
+                const income = data.map(item => item.income);
+
+                // Render Chart.js Bar Chart
+                const ctx = document.getElementById('comparisonChart').getContext('2d');
+                const comparisonChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels, // Categories
+                        datasets: [
+                            {
+                                label: 'Expenses',
+                                data: expenses, // Expense totals
+                                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                            },
+                            {
+                                label: 'Income',
+                                data: income, // Income totals
+                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Categories',
+                                },
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Amount',
+                                },
+                                beginAtZero: true,
+                            },
+                        },
+                    },
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+</html> {% endcomment %}

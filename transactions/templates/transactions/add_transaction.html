@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Add Transaction{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Add a New Transaction</h1>
+        
+        <!-- Display any form errors -->
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Please fix the errors below:</strong>
+        </div>
+        {% endif %}
+
+        <!-- Form for adding a transaction -->
+        <form method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="transactionType" class="form-label">Transaction Type</label>
+                {{ form.transaction_type|add_class:"form-select" }}
+            </div>
+
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                {{ form.category|add_class:"form-select" }}
+            </div>
+
+            <div class="mb-3">
+                <label for="amount" class="form-label">Amount</label>
+                {{ form.amount|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                {{ form.date|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                {{ form.description|add_class:"form-control" }}
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary">Add Transaction</button>
+            <a href="{% url 'transaction_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}
+
+{% comment %} <h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Transaction</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'transaction_list' %}">Back to Transactions</a> {% endcomment %}
